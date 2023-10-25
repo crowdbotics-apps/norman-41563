@@ -1,31 +1,31 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
 import { apiService } from "./api"
-export const signup_post_api_v1_signup_read = createAsyncThunk(
-  "signup_response_post_Signups/signup_post_api_v1_signup_read",
+export const api_v1_login_create = createAsyncThunk(
+  "authTokens/api_v1_login_create",
   async payload => {
-    const response = await apiService.signup_post_api_v1_signup_read(payload)
+    const response = await apiService.api_v1_login_create(payload)
     return response.data
   }
 )
 const initialState = { entities: [], api: { loading: "idle", error: null } }
-const signup_response_post_SignupsSlice = createSlice({
-  name: "signup_response_post_Signups",
+const authTokensSlice = createSlice({
+  name: "authTokens",
   initialState,
   reducers: {},
   extraReducers: builder => {
     builder
-      .addCase(signup_post_api_v1_signup_read.pending, (state, action) => {
+      .addCase(api_v1_login_create.pending, (state, action) => {
         if (state.api.loading === "idle") {
           state.api.loading = "pending"
         }
       })
-      .addCase(signup_post_api_v1_signup_read.fulfilled, (state, action) => {
+      .addCase(api_v1_login_create.fulfilled, (state, action) => {
         if (state.api.loading === "pending") {
           state.entities.push(action.payload)
           state.api.loading = "idle"
         }
       })
-      .addCase(signup_post_api_v1_signup_read.rejected, (state, action) => {
+      .addCase(api_v1_login_create.rejected, (state, action) => {
         if (state.api.loading === "pending") {
           state.api.error = action.error
           state.api.loading = "idle"
@@ -33,7 +33,4 @@ const signup_response_post_SignupsSlice = createSlice({
       })
   }
 })
-export default {
-  signup_post_api_v1_signup_read,
-  slice: signup_response_post_SignupsSlice
-}
+export default { api_v1_login_create, slice: authTokensSlice }

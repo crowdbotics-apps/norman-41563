@@ -14,33 +14,34 @@ const paypalapi_response_post_CreateProductsSlice = createSlice({
   name: "paypalapi_response_post_CreateProducts",
   initialState,
   reducers: {},
-  extraReducers: {
-    [paypalapi_post_modules_paypal_service_createproduct_create.pending]: (
-      state,
-      action
-    ) => {
-      if (state.api.loading === "idle") {
-        state.api.loading = "pending"
-      }
-    },
-    [paypalapi_post_modules_paypal_service_createproduct_create.fulfilled]: (
-      state,
-      action
-    ) => {
-      if (state.api.loading === "pending") {
-        state.entities.push(action.payload)
-        state.api.loading = "idle"
-      }
-    },
-    [paypalapi_post_modules_paypal_service_createproduct_create.rejected]: (
-      state,
-      action
-    ) => {
-      if (state.api.loading === "pending") {
-        state.api.error = action.error
-        state.api.loading = "idle"
-      }
-    }
+  extraReducers: builder => {
+    builder
+      .addCase(
+        paypalapi_post_modules_paypal_service_createproduct_create.pending,
+        (state, action) => {
+          if (state.api.loading === "idle") {
+            state.api.loading = "pending"
+          }
+        }
+      )
+      .addCase(
+        paypalapi_post_modules_paypal_service_createproduct_create.fulfilled,
+        (state, action) => {
+          if (state.api.loading === "pending") {
+            state.entities.push(action.payload)
+            state.api.loading = "idle"
+          }
+        }
+      )
+      .addCase(
+        paypalapi_post_modules_paypal_service_createproduct_create.rejected,
+        (state, action) => {
+          if (state.api.loading === "pending") {
+            state.api.error = action.error
+            state.api.loading = "idle"
+          }
+        }
+      )
   }
 })
 export default {

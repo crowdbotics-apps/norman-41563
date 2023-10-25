@@ -4,7 +4,7 @@ const paypalAPI = axios.create({
   headers: { Accept: "application/json", "Content-Type": "application/json" }
 })
 function paypalapi_post_modules_paypal_service_createproduct_create(payload) {
-  return paypalAPI.post(`/modules/paypal/service/create-product/`, payload.data)
+  return paypalAPI.post(`/modules/paypal/service/create-product/`, payload)
 }
 function paypalapi_get_modules_paypal_service_plan_id_getplandetails_list(
   payload
